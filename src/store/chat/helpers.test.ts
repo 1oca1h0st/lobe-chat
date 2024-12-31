@@ -74,7 +74,7 @@ describe('chatHelpers', () => {
     ] as ChatMessage[];
 
     it('returns all messages if history is disabled', () => {
-      const config = { enableHistoryCount: false, historyCount: 0 } as LobeAgentChatConfig;
+      const config = { enableHistoryCount: false, historyCount: undefined } as LobeAgentChatConfig;
       const slicedMessages = chatHelpers.getSlicedMessagesWithConfig(messages, config);
       expect(slicedMessages).toEqual(messages);
     });
@@ -90,6 +90,12 @@ describe('chatHelpers', () => {
 
     it('returns empty array when historyCount is negative', () => {
       const config = { enableHistoryCount: true, historyCount: -1 } as LobeAgentChatConfig;
+      const slicedMessages = chatHelpers.getSlicedMessagesWithConfig(messages, config);
+      expect(slicedMessages).toEqual([]);
+    });
+
+    it('returns empty array when historyCount is 0', () => {
+      const config = { enableHistoryCount: true, historyCount: 0 } as LobeAgentChatConfig;
       const slicedMessages = chatHelpers.getSlicedMessagesWithConfig(messages, config);
       expect(slicedMessages).toEqual([]);
     });
